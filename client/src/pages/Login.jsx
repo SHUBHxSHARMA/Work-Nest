@@ -33,12 +33,11 @@ export default function Login() {
 
   return (
     <div className="login-split">
-      <section className="login-hero" aria-label="WorkNest">
+      <section className="login-hero" aria-label="Work Nest">
         <a className="login-hero-brand" href="/login">
           <BrandMark />
           <span>
-            <strong>WorkNest</strong>
-            <small>BY NeoStats</small>
+            <strong>Work Nest</strong>
           </span>
         </a>
 
@@ -64,14 +63,14 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="login-hero-foot">A local project manager by NeoStats.</p>
+        <p className="login-hero-foot">A local project manager.</p>
       </section>
 
       <section className="login-panel">
         <form className="login-form" onSubmit={onSubmit}>
           <p className="login-welcome">Welcome back</p>
           <h2>Sign in to your workspace</h2>
-          <p className="muted">Use your WorkNest account to continue.</p>
+          <p className="muted">Use your Work Nest account to continue.</p>
           {error && <div className="banner error">{error}</div>}
           <label>
             Email address

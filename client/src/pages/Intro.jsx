@@ -56,8 +56,7 @@ export default function Intro() {
       <div className="auth-screen">
         <div className="splash" role="status" aria-live="polite">
           <BrandMark large />
-          <h1>WorkNest</h1>
-          <p>BY NeoStats</p>
+          <h1>Work Nest</h1>
         </div>
       </div>
     );

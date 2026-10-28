@@ -50,8 +50,7 @@ function Shell() {
         <div className="brand">
           <BrandMark />
           <div>
-            <strong>WorkNest</strong>
-            <span>BY NeoStats</span>
+            <strong>Work Nest</strong>
           </div>
         </div>
         <nav className="nav">

@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const WorkspaceContext = createContext({
-  title: "WorkNest",
+  title: "Work Nest",
   setTitle: () => {},
 });
 
 export function WorkspaceProvider({ children }) {
-  const [title, setTitle] = useState("WorkNest");
+  const [title, setTitle] = useState("Work Nest");
   return (
     <WorkspaceContext.Provider value={{ title, setTitle }}>
       {children}
@@ -22,7 +22,7 @@ export function usePageTitle(title) {
   const { setTitle } = useWorkspace();
   useEffect(() => {
     setTitle(title);
-    document.title = `${title} | WorkNest`;
+    document.title = `${title} | Work Nest`;
   }, [title, setTitle]);
 }
 

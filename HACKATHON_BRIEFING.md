@@ -1,5 +1,4 @@
-# Hackathon briefing — WorkNest
-BY NeoStats
+# Hackathon briefing — Work Nest
 
 Keep this tab open. This is the **judge study sheet**. The product is **runnable locally**. PostgreSQL 18 is up, database `neoboard` is migrated and seeded, API is on `:4000`, UI is on `:5173`. The whole app is **cream + forest green**: 2-second splash, then login, then a light sidebar workspace.
 
@@ -7,7 +6,17 @@ Keep this tab open. This is the **judge study sheet**. The product is **runnable
 
 ## Pitch (say this)
 
-WorkNest, by NeoStats, is a local collaborative project manager. Four roles share projects and tasks. **The server** blocks forbidden actions, even if someone uses Postman. Two people editing the same task cannot silently overwrite each other — the second save gets **HTTP 409**.
+Work Nest is a local collaborative project manager. Four roles share projects and tasks. **The server** blocks forbidden actions, even if someone uses Postman. Two people editing the same task cannot silently overwrite each other — the second save gets **HTTP 409**.
+
+---
+
+## Name (this step — wait)
+
+The product name is **Work Nest** (two words). It used to be written as WorkNest. Folders, `npm` package names, and the login token key are still `worknest` — that is code, not the brand.
+
+**Where:** splash (`Intro.jsx`), sidebar (`App.jsx`), login, browser tab (`index.html`), README, API health name.
+
+**Judge line:** “The product is Work Nest. We dropped BY NeoStats from the UI. Same app. The name is two words.”
 
 ---
 
@@ -44,7 +53,7 @@ Windows Chrome’s native date box showed broken text like **mm/05/yyyy** — on
 Judges will see a **SaaS workspace**, not a sparse landing. Cream + forest green. Yellow **W** on the green mark. No Tessel/Agencee names or photos.
 
 **What changed**
-- **Login** is a split screen (WorkNest, not FlowForge): dark forest-green left panel (yellow W, kicker, headline, honest 403 / 409 card) and a cream **Sign in** form on the right. The kicker, headline, lede, and server card sit as **one centered group** in that green half (`margin: auto` in a full-height flex column). The yellow **W** stays top-left. Copy and sign-in are unchanged. Demo accounts still use `Password123!`. **http://localhost:5173/?intro=1 always plays the 2-second WorkNest splash**, even with a JWT; after it, logged-in users go to dashboard and logged-out users get the split login.
+- **Login** is a split screen (Work Nest, not FlowForge): dark forest-green left panel (yellow W, kicker, headline, honest 403 / 409 card) and a cream **Sign in** form on the right. The kicker, headline, lede, and server card sit as **one centered group** in that green half (`margin: auto` in a full-height flex column). The yellow **W** stays top-left. Copy and sign-in are unchanged. Demo accounts still use `Password123!`. **http://localhost:5173/?intro=1 always plays the 2-second Work Nest splash**, even with a JWT; after it, logged-in users go to dashboard and logged-out users get the split login.
 - **Profile** fills the leftover cream: **My projects** (name, role, link) from `GET /api/projects`, plus **Assigned to me** tasks from each project’s `tasks?assigneeId=`. Empty states still occupy the pane and offer **Go to projects**. Save name/password still works. No vanity stat tiles.
 - Logged-in chrome: compact light **sidebar** (icon + label, forest-green active pill) plus a **top bar** (page title, project search, avatar, log out). Content fills the main pane with a 16px rhythm. No black sidebar. No huge empty cream field.
 - **Dashboard:** project cards only (no metric tiles). Yellow **W** (`#F4C430`) on the green mark.
@@ -165,7 +174,7 @@ client/                      React UI (port 5173)
   src/api.js                 fetch helper + JWT header
   src/auth.jsx               who is logged in; role helpers
   src/App.jsx                routes + light sidebar shell
-  src/pages/Intro.jsx        2-second WorkNest splash
+  src/pages/Intro.jsx        2-second Work Nest splash
   src/pages/                 one screen per file (no public landing)
   src/styles.css             cream + forest-green look for every page
 server/                      Express API (port 4000)
@@ -186,7 +195,7 @@ HACKATHON_BRIEFING.md        this file
 
 ## Data model (this step — we designed it)
 
-Open `server/prisma/schema.prisma`. **Six tables** in Postgres `neoboard`, matching the use case. WorkNest BY NeoStats.
+Open `server/prisma/schema.prisma`. **Six tables** in Postgres `neoboard`, matching the use case. Work Nest.
 
 | Suggested entity | Our table | Status | What it holds |
 | --- | --- | --- | --- |
@@ -213,7 +222,7 @@ Deactivate users instead of hard-deleting people. Admin can **Activate** them ag
 
 ## API contract (this step — we designed it)
 
-WorkNest BY NeoStats. Base: http://localhost:4000. Nouns, not verbs, except **actions** (see POST archive/deactivate).
+Work Nest. Base: http://localhost:4000. Nouns, not verbs, except **actions** (see POST archive/deactivate).
 
 | Check | Status | Notes |
 | --- | --- | --- |
@@ -284,7 +293,7 @@ All required screens exist and load real data. Extra: `/profile` (ours — keep 
 
 | URL | Status | What it shows | Who can open it |
 | --- | --- | --- | --- |
-| `/` | This step | 2-second WorkNest BY NeoStats splash, then `/login`. Replay: `/?intro=1` | Anyone. Logged-in users skip to dashboard |
+| `/` | This step | 2-second Work Nest splash, then `/login`. Replay: `/?intro=1` | Anyone. Logged-in users skip to dashboard |
 | `/login` | This step | Split screen: forest left + cream sign-in. Demo accounts listed. | Anyone (logged-in users bounce to dashboard) |
 | `/dashboard` | Done | Hello + project cards | Any logged-in user (Admin sees all projects) |
 | `/projects` | Done | Project list. Admin: create, archive, delete | Any logged-in user (list is membership-filtered) |
@@ -484,4 +493,4 @@ Refresh http://localhost:5173 — 2-second splash, then the cream login. Admin i
 
 **What next if you had time?** Live updates, activity log, attachments.
 
-**Why no public landing?** Dark-orange marketing page was rejected. `/` is a 2-second WorkNest splash, then login.
+**Why no public landing?** Dark-orange marketing page was rejected. `/` is a 2-second Work Nest splash, then login.

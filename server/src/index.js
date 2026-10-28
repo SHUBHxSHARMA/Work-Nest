@@ -29,7 +29,7 @@ app.get("/api/health", async (_req, res) => {
   } catch {
     database = "disconnected";
   }
-  res.json({ ok: true, name: "WorkNest API", database });
+  res.json({ ok: true, name: "Work Nest API", database });
 });
 
 app.use("/api/auth", authRoutes);
@@ -66,5 +66,5 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(port, () => {
-  console.log(`WorkNest API running on http://localhost:${port}`);
+  console.log(`Work Nest API running on http://localhost:${port}`);
 });

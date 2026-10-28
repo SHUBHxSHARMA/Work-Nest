@@ -1,5 +1,4 @@
-# WorkNest
-BY NeoStats
+# Work Nest
 
 Local multi-user project manager for the hackathon. **Admin**, **Project Manager**, **Team Member**, and **Viewer** share projects and tasks. Permissions are enforced on the **server**. Two people editing the same task cannot silently overwrite each other.
 
