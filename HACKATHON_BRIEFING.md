@@ -10,7 +10,17 @@ Work Nest is a collaborative project manager. Four roles share projects and task
 
 ---
 
-## Public demo (this step — wait)
+## One example project (this step — wait)
+
+The live board now has **one example project** only: **Example — Website relaunch**. An **Example** chip marks it. Admin / PM / member / viewer still share that project. Visitors create their own from **Projects**. Extra seed projects (Mobile app beta, Campus hiring drive, Data cleanup sprint) and extra demo users were removed from Neon.
+
+**Judge line:** “One example is seeded so you can try the four roles. Create your own from Projects.”
+
+**Please open https://work-nest-mocha.vercel.app as admin. You should see only the example project. Then create a new project from Projects. When that looks right, say so and we continue.**
+
+---
+
+## Public demo
 
 Recruiters and judges open **https://work-nest-mocha.vercel.app** — splash, then login. No Git clone. No local Postgres.
 
@@ -29,7 +39,7 @@ Recruiters and judges open **https://work-nest-mocha.vercel.app** — splash, th
 **How to demo**
 1. Open https://work-nest-mocha.vercel.app
 2. Sign in `admin@local.test` / `Password123!`
-3. Open **Website relaunch**. This is a **shared** database — do not delete it.
+3. Open **Example — Website relaunch**. This is a **shared** database — do not delete it.
 
 **Judge line:** “Anyone with the link can use it. The UI is on Vercel. The API is on Vercel. The data is Neon Postgres. Same demo accounts as local.”
 
@@ -144,11 +154,11 @@ Same person can be PM on project A and viewer on project B.
 
 **Team Member** (`member@local.test`) — **rechecked exactly**
 
-On **Website relaunch** this account is `team_member` and owns **Draft landing page copy**. GET `/api/projects` also returns **Data cleanup sprint** (they belong there too). Not Mobile app beta or Campus hiring drive.
+On **Example — Website relaunch** this account is `team_member` and owns **Draft landing page copy**. GET `/api/projects` returns only that membership unless they were added to another project.
 
 | Capability | API | UI | Exact / not |
 | --- | --- | --- | --- |
-| View projects they belong to | 200, 2 memberships only | Dashboard “Projects you belong to”: Website relaunch + Data cleanup sprint. No Users nav. | Exact |
+| View projects they belong to | 200, example membership | Dashboard shows Example — Website relaunch. No Users nav. | Exact |
 | View assigned tasks | 200 GET task + `tasks?assigneeId=` | Profile **Assigned to me** and Tasks tab open “Draft landing page copy” | Exact |
 | Update their tasks | PATCH own task + `version` → 200 | Title/description enabled. Save (sends version). | Exact. Extra: can also edit other tasks in the same project (not assigned-only). |
 | Add comments | POST comment → 201 | Comment box + Add comment. | Exact |
@@ -415,29 +425,16 @@ Every verb is a real Express route. Buttons call those routes. Postman without a
 
 Password for every account: `Password123!`
 
-Seeded projects (Admin sees all on the dashboard): **Website relaunch**, **Mobile app beta**, **Campus hiring drive**, **Data cleanup sprint**. Re-seed is safe — it upserts by email.
+Seeded project (Admin also sees projects people create): **Example — Website relaunch**. Re-seed is safe — it upserts by email and removes the old extra seed projects/users.
 
-**On Website relaunch**
+**On Example — Website relaunch**
 
 | Email | Name | Role on the project |
 | --- | --- | --- |
 | `pm@local.test` | Priya Manager | project manager |
-| `sana@local.test` | Sana Patel | second project manager |
 | `member@local.test` | Arjun Member | team member (assigned “Draft landing page copy”) |
-| `meera@local.test` | Meera Shah | team member |
-| `kabir@local.test` | Kabir Rao | team member |
-| `neha@local.test` | Neha Iyer | team member |
 | `viewer@local.test` | Vikram Viewer | viewer |
-| `rohan@local.test` | Rohan Gupta | extra viewer |
-
-**Not on a project yet** (Admin can add them from **Users** or the **Team** tab)
-
-| Email | Name | Why they exist |
-| --- | --- | --- |
-| `admin@local.test` | Asha Admin | global admin (does not need a membership) |
-| `leela@local.test` | Leela Nair | spare person to add to the team live |
-| `intern@local.test` | Dev Intern | spare person to add to the team live |
-| `tara@local.test` | Tara Singh | spare person to add to the team live |
+| `admin@local.test` | Asha Admin | not a member (global admin) |
 
 ---
 
@@ -445,8 +442,8 @@ Seeded projects (Admin sees all on the dashboard): **Website relaunch**, **Mobil
 
 Use two browsers, or one window plus Incognito.
 
-1. **Admin** — log in. Open **Users**. Create a throwaway project, then **Delete** it (do not delete Website relaunch). On **Team**, assign a **project manager**.
-2. **PM** — log in as `pm@local.test`. **Team** tab: add `leela@local.test` as team_member (PM cannot add another PM). **Tasks** tab (create/assign).
+1. **Admin** — log in. See only the **Example** project. **Projects → New project** to make your own. Do not delete the example.
+2. **PM** — log in as `pm@local.test`. **Team** / **Tasks** on the example project.
 3. **Member** — log in as `member@local.test`. Open the assigned task, change status, add a comment. Try something forbidden (delete the task or manage team) — **403**.
 4. **Viewer** — log in as `viewer@local.test`. You can read. You cannot edit or comment.
 5. **Conflict** — open the same task as PM and member. Save as PM first. Save as member → **409** and “Reload latest”.
@@ -496,7 +493,7 @@ Refresh http://localhost:5173 — 2-second splash, then the cream login. Admin i
 
 **This step:** Public demo at https://work-nest-mocha.vercel.app (Vercel + Neon).
 
-**Waiting on you:** Open the live link, log in, click Website relaunch.
+**Waiting on you:** Open the live link as admin. Confirm only the example project is seeded, then create your own.
 
 **Not in this build:** live WebSockets, file uploads, email.
 

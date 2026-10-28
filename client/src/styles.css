@@ -290,6 +290,7 @@ html .logo-mark-lg {
 .chip.priority-high { background: #fde8e4; color: #9a3412; }
 .chip.priority-medium { background: #fef3c7; color: #92400e; }
 .chip.priority-low { background: #efeae0; color: var(--ink-soft); }
+.chip.example { background: var(--sage); color: var(--forest-dark); margin-left: 8px; }
 
 .tabs {
   display: flex;

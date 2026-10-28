@@ -9,19 +9,19 @@ Built with **PostgreSQL + Express + React + Node** (PERN). Postgres instead of M
 
 ## Try it (no install)
 
-Open the live demo. Anyone with the link can sign in. This is a **shared** demo database — please do not delete **Website relaunch** or **Draft landing page copy**.
+Open the live demo. Anyone with the link can sign in. The board starts with **one example project** (`Example — Website relaunch`) so you can try admin, PM, member, and viewer. Create your own from **Projects**. This is a **shared** database — please do not delete the example.
 
 Password for every demo account: `Password123!`
 
 | Email | What they are |
 | --- | --- |
 | `admin@local.test` | Global admin (users + projects) |
-| `pm@local.test` | Project manager on Website relaunch |
+| `pm@local.test` | Project manager on the example project |
 | `member@local.test` | Team member (can update tasks, status, comments) |
 | `viewer@local.test` | Read only |
 
-1. Admin — Users page. Create a throwaway project, then delete it.
-2. PM — Website relaunch → Team / Tasks.
+1. Admin — see the **Example** project, then **Projects → New project** to make your own.
+2. PM — Example — Website relaunch → Team / Tasks.
 3. Member — open **Draft landing page copy**. Change status, add a comment, Save.
 4. Viewer — can read. Cannot edit or comment.
 5. **409** — same task in two windows. Save in one, then Save in the other without reload.

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import { api } from "../api.js";
+import { isExampleProject } from "../exampleProject.js";
 import { roleLabel, usePageTitle } from "../workspace.jsx";
 
 export default function ProjectLayout() {
@@ -22,7 +23,10 @@ export default function ProjectLayout() {
     <div className="page">
       <div className="page-head">
         <div>
-          <h1>{project.name}</h1>
+          <h1>
+            {project.name}
+            {isExampleProject(project) && <span className="chip example">Example</span>}
+          </h1>
           <p>{project.description}</p>
         </div>
         <span className={`chip ${project.myRole}`}>{roleLabel(project.myRole)}</span>

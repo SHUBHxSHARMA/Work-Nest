@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { api } from "../api.js";
 import { useAuth } from "../auth.jsx";
+import { isExampleProject } from "../exampleProject.js";
 import { roleLabel, usePageTitle } from "../workspace.jsx";
 
 export default function Projects() {
@@ -90,7 +91,9 @@ export default function Projects() {
     <div className="page">
       <div className="toolbar">
         <p className="muted" style={{ margin: 0 }}>
-          {filter ? `Showing matches for “${filter}”.` : "Admin creates projects. Everyone else only sees memberships."}
+          {filter
+            ? `Showing matches for “${filter}”.`
+            : "One example project is included. Admin can create more. Everyone else only sees memberships."}
         </p>
         {isAdmin && (
           <button className="btn teal" type="button" onClick={() => { setError(""); setOpen(true); }}>
@@ -120,6 +123,7 @@ export default function Projects() {
                     <Link to={`/projects/${project.id}`}>
                       <b>{project.name}</b>
                     </Link>
+                    {isExampleProject(project) && <span className="chip example">Example</span>}
                     <div className="muted">{project.description}</div>
                   </td>
                   <td>

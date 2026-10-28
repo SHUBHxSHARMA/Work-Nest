@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api.js";
 import { useAuth } from "../auth.jsx";
+import { isExampleProject } from "../exampleProject.js";
 import { roleLabel, usePageTitle } from "../workspace.jsx";
 
 export default function Dashboard() {
@@ -30,8 +31,8 @@ export default function Dashboard() {
           <h1>Projects</h1>
           <p>
             {user.globalRole === "admin"
-              ? "Every project on this machine."
-              : "Projects you belong to."}
+              ? "One example project is included. Create your own from Projects."
+              : "The example project you belong to. Create your own from Projects if you are an admin."}
           </p>
         </div>
       </div>
@@ -55,6 +56,7 @@ export default function Dashboard() {
                     <Link to={`/projects/${project.id}`}>
                       <b>{project.name}</b>
                     </Link>
+                    {isExampleProject(project) && <span className="chip example">Example</span>}
                     <div className="muted">{project.description || "No description"}</div>
                   </td>
                   <td>
