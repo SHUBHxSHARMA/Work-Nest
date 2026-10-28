@@ -1,20 +1,47 @@
 # Hackathon briefing — Work Nest
 
-Keep this tab open. This is the **judge study sheet**. The product is **runnable locally**. PostgreSQL 18 is up, database `neoboard` is migrated and seeded, API is on `:4000`, UI is on `:5173`. The whole app is **cream + forest green**: 2-second splash, then login, then a light sidebar workspace.
+Keep this tab open. This is the **judge study sheet**. Anyone can use the app from a **public link** — no clone, no Postgres install. Live demo: **https://work-nest-mocha.vercel.app**. Shared Neon database, same demo logins. Local Postgres still works on this laptop if you want to run it here.
 
 ---
 
 ## Pitch (say this)
 
-Work Nest is a local collaborative project manager. Four roles share projects and tasks. **The server** blocks forbidden actions, even if someone uses Postman. Two people editing the same task cannot silently overwrite each other — the second save gets **HTTP 409**.
+Work Nest is a collaborative project manager. Four roles share projects and tasks. **The server** blocks forbidden actions, even if someone uses Postman. Two people editing the same task cannot silently overwrite each other — the second save gets **HTTP 409**. Open **https://work-nest-mocha.vercel.app** and log in.
 
 ---
 
-## Name (this step — wait)
+## Public demo (this step — wait)
+
+Recruiters and judges open **https://work-nest-mocha.vercel.app** — splash, then login. No Git clone. No local Postgres.
+
+**What changed**
+- Vercel project `work-nest` ships **Vite + Express** together (`vercel.json` Services). `/api` hits Express. Everything else is the React app.
+- Hosted Postgres is **Neon** (free). Tables were migrated and seeded. Demo password is still `Password123!`.
+- Vercel login wall was turned off so the `*.vercel.app` link is public.
+- Prisma uses `DATABASE_URL` (pooled) and `DATABASE_URL_UNPOOLED` (migrations). Local `.env` still points at this laptop’s Postgres.
+
+**Where it lives**
+- Live URL: https://work-nest-mocha.vercel.app
+- `vercel.json` — frontend `client/`, backend `server/`
+- `server/prisma/schema.prisma` — `directUrl` for Neon migrations
+- README — live link first, clone-and-run still below
+
+**How to demo**
+1. Open https://work-nest-mocha.vercel.app
+2. Sign in `admin@local.test` / `Password123!`
+3. Open **Website relaunch**. This is a **shared** database — do not delete it.
+
+**Judge line:** “Anyone with the link can use it. The UI is on Vercel. The API is on Vercel. The data is Neon Postgres. Same demo accounts as local.”
+
+**Please open the live link, log in, click a project. When that works, say so and we continue.**
+
+---
+
+## Name
 
 The product name is **Work Nest** (two words). It used to be written as WorkNest. Folders, `npm` package names, and the login token key are still `worknest` — that is code, not the brand.
 
-**For recruiters:** they clone https://github.com/SHUBHxSHARMA/Work-Nest and run it on **their** laptop (README steps). No Vercel required. Docker or local PostgreSQL + two terminals.
+**For recruiters:** send the live URL first. They can also clone https://github.com/SHUBHxSHARMA/Work-Nest and run it on **their** laptop (README steps).
 
 **Where:** splash (`Intro.jsx`), sidebar (`App.jsx`), login, browser tab (`index.html`), README, API health name.
 
@@ -22,7 +49,7 @@ The product name is **Work Nest** (two words). It used to be written as WorkNest
 
 ---
 
-## Due date picker (this step — wait)
+## Due date picker
 
 Windows Chrome’s native date box showed broken text like **mm/05/yyyy** — only one segment filled. That is not a real date, so create/save often sent nothing.
 
@@ -467,17 +494,17 @@ Refresh http://localhost:5173 — 2-second splash, then the cream login. Admin i
 
 **Done:** React pages, Express APIs, JWT + bcrypt, Prisma schema, migrate, seed, role 403s, task `version` + 409 UI, comments. Dark-orange landing and black sidebar removed.
 
-**This step:** Due date picker writes a full YYYY-MM-DD (or blank). No `mm/05/yyyy`.
+**This step:** Public demo at https://work-nest-mocha.vercel.app (Vercel + Neon).
 
-**Waiting on you:** Website relaunch → Tasks → New task → pick a 2026 day → create. Then edit due date on the task page.
+**Waiting on you:** Open the live link, log in, click Website relaunch.
 
-**Not in this build:** cloud deploy, live WebSockets, file uploads, email.
+**Not in this build:** live WebSockets, file uploads, email.
 
 ---
 
 ## What you decided vs AI
 
-**You:** Postgres not Mongo, global Admin vs per-project roles, no public signup, version + 409, server permissions, local only.
+**You:** Postgres not Mongo, global Admin vs per-project roles, no public signup, version + 409, server permissions, public link for recruiters.
 
 **AI typed:** folders, route files, React layouts. You explain from this tab.
 
@@ -491,7 +518,7 @@ Refresh http://localhost:5173 — 2-second splash, then the cream login. Admin i
 
 **How is authorization real?** Middleware on every write. Postman still 403.
 
-**Where is the database?** This laptop. Windows PostgreSQL 18. No Firebase. Vercel is optional and needs a hosted Postgres (Neon) plus `DATABASE_URL` and `JWT_SECRET`. `vercel.json` sends `/api` to Express and the rest to Vite.
+**Where is the database?** Public demo uses **Neon Postgres**. This laptop still has Windows PostgreSQL 18 for local work. No Firebase. `vercel.json` sends `/api` to Express and the rest to Vite.
 
 **What next if you had time?** Live updates, activity log, attachments.
 

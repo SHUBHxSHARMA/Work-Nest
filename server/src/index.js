@@ -81,7 +81,7 @@ app.use((err, _req, res, _next) => {
       res,
       503,
       "DB_UNAVAILABLE",
-      "PostgreSQL is not running on this laptop yet. Start it, create database neoboard, then run migrate and seed."
+      "The database is not reachable right now."
     );
   }
   sendError(res, 500, "SERVER_ERROR", "Something went wrong on the server.");
