@@ -14,6 +14,8 @@ Work Nest is a local collaborative project manager. Four roles share projects an
 
 The product name is **Work Nest** (two words). It used to be written as WorkNest. Folders, `npm` package names, and the login token key are still `worknest` — that is code, not the brand.
 
+**For recruiters:** they clone https://github.com/SHUBHxSHARMA/Work-Nest and run it on **their** laptop (README steps). No Vercel required. Docker or local PostgreSQL + two terminals.
+
 **Where:** splash (`Intro.jsx`), sidebar (`App.jsx`), login, browser tab (`index.html`), README, API health name.
 
 **Judge line:** “The product is Work Nest. We dropped BY NeoStats from the UI. Same app. The name is two words.”

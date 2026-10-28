@@ -1,113 +1,116 @@
 # Work Nest
 
-Local multi-user project manager for the hackathon. **Admin**, **Project Manager**, **Team Member**, and **Viewer** share projects and tasks. Permissions are enforced on the **server**. Two people editing the same task cannot silently overwrite each other.
+A local **role-based project manager**. Four roles share projects and tasks. Permissions are enforced on the **server** (Postman still gets 403). Two people editing the same task cannot silently overwrite each other — the second save gets **HTTP 409**.
 
-Study notes for judges: keep [`HACKATHON_BRIEFING.md`](HACKATHON_BRIEFING.md) open.
+Built with **PostgreSQL + Express + React + Node** (PERN). Postgres instead of Mongo because roles and a task `version` column fit tables.
 
-## Stack
+Repo: https://github.com/SHUBHxSHARMA/Work-Nest
 
-| Piece | Tool | Why |
-| --- | --- | --- |
-| Frontend | React + Vite | Screens in the browser |
-| Backend | Node + Express | APIs, login, role checks |
-| Database | PostgreSQL on this laptop | Spec prefers it. No Firebase / Supabase |
-| Schema | Prisma | One file maps to the tables |
-| Auth | JWT + bcrypt | Login ticket + hashed passwords |
+## What a recruiter / judge should see
 
-This is Express + React + Node with **PostgreSQL instead of MongoDB**.
+1. Clone this repo and run it locally (steps below).
+2. Log in as admin, then as a team member, then as a viewer.
+3. Try a forbidden action (member deleting a project) — API returns **403**.
+4. Open the same task in two browsers, save twice — second save is **409**.
 
-## Demo accounts
+Password for every demo account: `Password123!`
 
-Password for every account: `Password123!`
-
-| Email | Role in the demo |
+| Email | What they are |
 | --- | --- |
-| `admin@local.test` | Admin (creates users and projects). Not a project member. |
-| `pm@local.test` | Project manager on “Website relaunch” |
-| `sana@local.test` | Second project manager on “Website relaunch” |
-| `member@local.test` | Team member, assigned a task |
-| `meera@local.test` | Extra team member |
-| `kabir@local.test` | Extra team member |
-| `neha@local.test` | Extra team member |
-| `viewer@local.test` | Viewer |
-| `rohan@local.test` | Extra viewer |
-| `leela@local.test` | Not on a project — add from Team |
-| `intern@local.test` | Not on a project — add from Team |
-| `tara@local.test` | Not on a project — add from Team |
+| `admin@local.test` | Global admin (users + projects) |
+| `pm@local.test` | Project manager on Website relaunch |
+| `member@local.test` | Team member (can update tasks, status, comments) |
+| `viewer@local.test` | Read only |
 
-## Run locally
+## Run it on your machine
 
-Client and server npm install, `prisma generate`, **migrate**, and **seed** are already done. PostgreSQL 18 is running on this laptop (`postgresql-x64-18`, port **5432**, database **neoboard**, password **postgres**). Health should return `"database": "connected"`.
-
-If you reinstall the machine, connection string in `server/.env`:
-
-```
-postgresql://postgres:postgres@localhost:5432/neoboard?schema=public&connect_timeout=5
-```
-
-Copy `server/.env.example` to `server/.env` if `.env` is missing.
-
-**Docker** (only if you install Docker later): `docker compose up -d`
-
-Re-seed only if the database is empty (from `server/`):
+You need **Node.js 20+** and **PostgreSQL** (or Docker).
 
 ```bash
-npx prisma migrate deploy
-npm run prisma:seed
+git clone https://github.com/SHUBHxSHARMA/Work-Nest.git
+cd Work-Nest
 ```
 
-### Start the app (two terminals)
+### 1. Database
 
-Terminal A:
+**Option A — PostgreSQL already installed**
+
+Create a database named `neoboard`.
+
+**Option B — Docker**
+
+```bash
+docker compose up -d
+```
+
+That starts Postgres 17 on port **5432**, user `postgres`, password `postgres`, database `neoboard`.
+
+### 2. Server env
+
+```bash
+cp server/.env.example server/.env
+```
+
+On Windows PowerShell:
+
+```powershell
+Copy-Item server\.env.example server\.env
+```
+
+Default `DATABASE_URL` matches Docker and a local Postgres with user/password `postgres`. Change it if your Postgres login is different. `JWT_SECRET` can stay as-is for a local demo.
+
+### 3. Install, migrate, seed, start
+
+Terminal 1 — API (http://localhost:4000):
 
 ```bash
 cd server
+npm install
+npx prisma migrate deploy
+npm run prisma:seed
 npm run dev
 ```
 
-API: http://localhost:4000/api/health (includes `database: connected` or `disconnected`)
+Check http://localhost:4000/api/health — you want `"database": "connected"`.
 
-Terminal B:
+Terminal 2 — UI (http://localhost:5173):
 
 ```bash
 cd client
+npm install
 npm run dev
 ```
 
-UI: http://localhost:5173
+Open **http://localhost:5173** (splash, then login). Vite proxies `/api` to port 4000.
 
-The Vite dev server proxies `/api` to port 4000.
+## Demo path (10 minutes)
 
-## Demo path (practice this)
+1. **Admin** — `admin@local.test`. Users page. Create a throwaway project, then delete it. Do not delete Website relaunch.
+2. **PM** — `pm@local.test`. Website relaunch → Team / Tasks.
+3. **Member** — `member@local.test`. Open **Draft landing page copy**. Change status, add a comment, Save.
+4. **Viewer** — `viewer@local.test`. Can read. Cannot edit or comment.
+5. **409** — same task in two windows. Save in one, then Save in the other without reload.
 
-Use two browsers, or one window plus Incognito.
+Judge notes: [`HACKATHON_BRIEFING.md`](HACKATHON_BRIEFING.md)
 
-1. Log in as **admin**. Create people if needed. Open **Projects**.
-2. Log in as **pm**. Open **Website relaunch** → **Tasks** → assign work. Open **Team**.
-3. Log in as **member**. Open the assigned task, change status, add a comment. Try to delete the project (it must fail).
-4. Log in as **viewer**. You can read. You cannot edit.
-5. **Conflict:** open the same task as PM and member. Save as PM first. Save as member → **409** and “Reload latest”.
+## Stack
 
-## What is real vs later
-
-**Real:** local Postgres, JWT login, server 403s, task `version` + 409, comments, the listed pages.
-
-**Not in this build:** live WebSockets, file uploads, email.
-
-## Vercel (optional)
-
-`vercel.json` deploys **client** (Vite) and **server** (Express) as one Vercel Services project. `/api` goes to Express; everything else is the React app.
-
-Vercel cannot use this laptop’s PostgreSQL. Add a hosted Postgres (Neon on the Vercel Marketplace is the usual match), then set:
-
-- `DATABASE_URL`
-- `JWT_SECRET`
-
-Then **Import** the GitHub repo `SHUBHxSHARMA/Work-Nest` again. Judges can still run it locally.
+| Piece | Tool |
+| --- | --- |
+| UI | React + Vite |
+| API | Express on Node |
+| Database | PostgreSQL + Prisma |
+| Auth | JWT + bcrypt |
 
 ## Folders
 
-- `client/` — React pages
-- `server/` — Express APIs + Prisma
-- `server/prisma/schema.prisma` — tables
-- `docker-compose.yml` — local Postgres recipe
+- `client/` — React screens
+- `server/` — Express routes, Prisma schema, seed
+- `docker-compose.yml` — optional local Postgres
+- `vercel.json` — optional cloud deploy (needs hosted Postgres). **Not required to try the project.**
+
+## What is real vs later
+
+**Real:** local Postgres, JWT, server 403s, task `version` + 409, comments, CRUD.
+
+**Not in this build:** live WebSockets, file uploads, email.
