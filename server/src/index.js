@@ -18,7 +18,29 @@ if (!process.env.JWT_SECRET) {
   console.warn("JWT_SECRET is missing. Set it in server/.env before logging in.");
 }
 
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_ORIGIN,
+  process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : null,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        /\.vercel\.app$/i.test(origin)
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/api/health", async (_req, res) => {
@@ -65,6 +87,10 @@ app.use((err, _req, res, _next) => {
   sendError(res, 500, "SERVER_ERROR", "Something went wrong on the server.");
 });
 
-app.listen(port, () => {
-  console.log(`Work Nest API running on http://localhost:${port}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`Work Nest API running on http://localhost:${port}`);
+  });
+}
+
+export default app;

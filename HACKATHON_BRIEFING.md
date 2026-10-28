@@ -489,7 +489,7 @@ Refresh http://localhost:5173 — 2-second splash, then the cream login. Admin i
 
 **How is authorization real?** Middleware on every write. Postman still 403.
 
-**Where is the database?** This laptop. Windows PostgreSQL 18. No Firebase.
+**Where is the database?** This laptop. Windows PostgreSQL 18. No Firebase. Vercel is optional and needs a hosted Postgres (Neon) plus `DATABASE_URL` and `JWT_SECRET`. `vercel.json` sends `/api` to Express and the rest to Vite.
 
 **What next if you had time?** Live updates, activity log, attachments.
 

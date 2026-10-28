@@ -92,7 +92,18 @@ Use two browsers, or one window plus Incognito.
 
 **Real:** local Postgres, JWT login, server 403s, task `version` + 409, comments, the listed pages.
 
-**Not in this build:** cloud deploy, live WebSockets, file uploads, email.
+**Not in this build:** live WebSockets, file uploads, email.
+
+## Vercel (optional)
+
+`vercel.json` deploys **client** (Vite) and **server** (Express) as one Vercel Services project. `/api` goes to Express; everything else is the React app.
+
+Vercel cannot use this laptop’s PostgreSQL. Add a hosted Postgres (Neon on the Vercel Marketplace is the usual match), then set:
+
+- `DATABASE_URL`
+- `JWT_SECRET`
+
+Then **Import** the GitHub repo `SHUBHxSHARMA/Work-Nest` again. Judges can still run it locally.
 
 ## Folders
 
